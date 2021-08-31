@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+
+    <record model="ir.module.category" id="module_step_delivery">
+        <field name="name">Check delivery</field>
+        <field name="description">"Availabel for QC and inventory's staff."</field>
+        <field name="sequence">7</field>
+    </record>
+
+    <record id="group_quantity_qc" model="res.groups">
+        <field name="name">QC</field>
+        <field name="category_id" ref="module_step_delivery"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_quantity_staff" model="res.groups">
+        <field name="name">Inventory's Staff</field>
+        <field name="category_id" ref="module_step_delivery"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+</data>
+</odoo>

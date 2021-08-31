@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="discount_product_template" model="product.template">
+            <field name="name">Discount Product</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">0</field>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <field name="is_discount">True</field>
+            <field name="default_code">PD</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description_sale">Discount product for sale order</field>
+        </record>
+
+    </data>
+</odoo>

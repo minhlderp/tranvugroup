@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model='ir.ui.menu' id='sale.menu_sale_report'>
+            <field name="groups_id" eval="[(5,)]"/>
+        </record>
+
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">Add phone, email... fields</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="tag"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="website"/>
+                    <field name="function"/>
+                    <field name="partner_create_date"/>
+                    <field name="partner_create_uid"/>
+                    <field name="partner_write_date"/>
+                    <field name="partner_write_uid"/>
+                </xpath>
+
+                <xpath expr="//page[@name='order_lines']" position="after">
+                    <page string="Mautic" name="mautic">
+                        <group>
+                            <group>
+                                <field name="mautic_id"/>
+                                <field name="mautic_point"/>
+                                <field name="mautic_last_active"/>
+                                <field name="mautic_hot"/>
+                                <field name="mautic_stage"/>
+                                <field name="mautic_link"/>
+                                <field name="mautic_contact_owner"/>
+                                <field name="mautic_event_name"/>
+                                <field name="mautic_event_type"/>
+                                <field name="nps_1"/>
+                                <field name="khao_sat_nps_1"/>
+                                <field name="nps_2"/>
+                                <field name="khao_sat_nps_2"/>
+                            </group>
+                            <group>
+                                <field name="mautic_event_time"/>
+                                <field name="mautic_last_email_open"/>
+                                <field name="mautic_last_email"/>
+                                <field name="mautic_last_form_submit"/>
+                                <field name="mautic_last_form"/>
+                                <field name="mautic_last_page_hit"/>
+                                <field name="mautic_last_page"/>
+                                <field name="mautic_note"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_quotation_tree_inherit" model="ir.ui.view">
+            <field name="name">Add phone, email... fields</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="phone"/>
+                    <field name="email"/>
+
+                    <field name="mautic_id" optional="show"/>
+                    <field name="mautic_point" optional="show"/>
+                    <field name="mautic_last_active" optional="show"/>
+                    <field name="mautic_hot" optional="show"/>
+                    <field name="mautic_stage" optional="show"/>
+                    <field name="mautic_link" optional="show"/>
+                    <field name="mautic_contact_owner" optional="show"/>
+                    <field name="mautic_event_name" optional="show"/>
+                    <field name="mautic_event_type" optional="show"/>
+                    <field name="nps_1" optional="show"/>
+                    <field name="khao_sat_nps_1" optional="show"/>
+                    <field name="nps_2" optional="show"/>
+                    <field name="khao_sat_nps_2" optional="show"/>
+                    <field name="mautic_event_time" optional="show"/>
+                    <field name="mautic_last_email_open" optional="show"/>
+                    <field name="mautic_last_email" optional="show"/>
+                    <field name="mautic_last_form_submit" optional="show"/>
+                    <field name="mautic_last_form" optional="show"/>
+                    <field name="mautic_last_page_hit" optional="show"/>
+                    <field name="mautic_last_page" optional="show"/>
+                    <field name="mautic_note" optional="show"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_order_tree_inherit" model="ir.ui.view">
+            <field name="name">Add phone, email... fields</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="phone"/>
+                    <field name="email"/>
+
+                    <field name="mautic_id" optional="show"/>
+                    <field name="mautic_point" optional="show"/>
+                    <field name="mautic_last_active" optional="show"/>
+                    <field name="mautic_hot" optional="show"/>
+                    <field name="mautic_stage" optional="show"/>
+                    <field name="mautic_link" optional="show"/>
+                    <field name="mautic_contact_owner" optional="show"/>
+                    <field name="mautic_event_name" optional="show"/>
+                    <field name="mautic_event_type" optional="show"/>
+                    <field name="nps_1" optional="show"/>
+                    <field name="khao_sat_nps_1" optional="show"/>
+                    <field name="nps_2" optional="show"/>
+                    <field name="khao_sat_nps_2" optional="show"/>
+                    <field name="mautic_event_time" optional="show"/>
+                    <field name="mautic_last_email_open" optional="show"/>
+                    <field name="mautic_last_email" optional="show"/>
+                    <field name="mautic_last_form_submit" optional="show"/>
+                    <field name="mautic_last_form" optional="show"/>
+                    <field name="mautic_last_page_hit" optional="show"/>
+                    <field name="mautic_last_page" optional="show"/>
+                    <field name="mautic_note" optional="show"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
