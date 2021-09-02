@@ -7,27 +7,40 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="is_duplicate_phone"/>
+                    <field name="is_duplicate_email"/>
+                </xpath>
+
+                <xpath expr="//sheet//group" position="after">
+                    <group>
+                        <group>
+                            <field name="mautic_event_time"/>
+                            <field name="mautic_event_type"/>
+                            <field name="mautic_event_name"/>
+                            <field name="mautic_link"/>
+                        </group>
+                        <group>
+                            <field name="mautic_stage"/>
+                            <field name="mautic_point"/>
+                            <field name="mautic_hot"/>
+                        </group>
+                    </group>
+                </xpath>
 
                 <xpath expr="//page[@name='sales_purchases']" position="after">
                     <page name="mautic" string="Mautic">
                         <group>
                             <group>
                                 <field name="mautic_id"/>
-                                <field name="mautic_point"/>
                                 <field name="mautic_last_active"/>
-                                <field name="mautic_hot"/>
-                                <field name="mautic_stage"/>
-                                <field name="mautic_link"/>
                                 <field name="mautic_contact_owner"/>
-                                <field name="mautic_event_name"/>
-                                <field name="mautic_event_type"/>
                                 <field name="nps_1"/>
                                 <field name="khao_sat_nps_1"/>
                                 <field name="nps_2"/>
                                 <field name="khao_sat_nps_2"/>
                             </group>
                             <group>
-                                <field name="mautic_event_time"/>
                                 <field name="mautic_last_email_open"/>
                                 <field name="mautic_last_email"/>
                                 <field name="mautic_last_form_submit"/>
