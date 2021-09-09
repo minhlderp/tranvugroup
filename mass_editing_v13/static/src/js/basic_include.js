@@ -1,4 +1,4 @@
-odoo.define('mass_editing.include', function (require) {
+odoo.define('mass_editing_v13.include', function (require) {
 "use strict";
 var BasicModel = require('web.BasicModel');
 
