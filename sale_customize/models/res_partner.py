@@ -30,8 +30,26 @@ class ResPartner(models.Model):
     nps_2 = fields.Integer(string='Mautic NPS 2')
     khao_sat_nps_2 = fields.Char(string='Mautic Khao Sat NPS 2')
 
-    is_duplicate_phone = fields.Boolean(default=False, compute='_get_is_duplicate_phone')
-    is_duplicate_email = fields.Boolean(default=False, compute='_get_is_duplicate_email')
+    is_duplicate_phone = fields.Boolean(default=False, compute='_get_is_duplicate_phone', search='_search_is_duplicate_phone')
+    is_duplicate_email = fields.Boolean(default=False, compute='_get_is_duplicate_email', search='_search_is_duplicate_email')
+
+    @api.model
+    def _search_is_duplicate_phone(self, operator, value):
+        partners = self.search([])
+        potential_dupplicates = []
+        for partner in partners:
+            if partner.is_duplicate_phone:
+                potential_dupplicates.append(partner.id)
+        return [('id', 'in', potential_dupplicates)]
+
+    @api.model
+    def _search_is_duplicate_email(self, operator, value):
+        partners = self.search([])
+        potential_dupplicates = []
+        for partner in partners:
+            if partner.is_duplicate_email:
+                potential_dupplicates.append(partner.id)
+        return [('id', 'in', potential_dupplicates)]
 
     def _get_is_duplicate_phone(self):
         for partner in self:
@@ -49,7 +67,7 @@ class ResPartner(models.Model):
         for partner in self:
             exist_email = False
             if partner.email:
-                exist = self.search([('phone', 'in', [partner.email, partner.email.strip()]), ('id', '!=', partner.id)], limit=1)
+                exist = self.search([('email', 'in', [partner.email, partner.email.strip()]), ('id', '!=', partner.id)], limit=1)
                 if exist:
                     exist_email = True
             partner.is_duplicate_email = exist_email
@@ -75,21 +93,21 @@ class ResPartner(models.Model):
                 vals['mobile'] = partner.mobile.replace('+84', '0')
             partner.with_context(from_dw=True).write(vals)
 
-    @api.constrains('phone', 'mobile')
-    def check_duplicate_phone_mobile(self):
-        for partner in self:
-            if partner.phone:
-                if partner.phone.index('+84') > -1:
-                    raise ValidationError('Please change phone number from +84 to 0...')
-                exist = self.search([('phone', 'in', [partner.phone, partner.phone.strip()]), ('id', '!=', partner.id)], limit=1)
-                if exist:
-                    raise ValidationError('The phone number already exist in the system')
-            if partner.mobile:
-                if partner.mobile.index('+84') > -1:
-                    raise ValidationError('Please change mobile number from +84 to 0...')
-                exist = self.search([('phone', 'in', [partner.mobile, partner.mobile.strip()]), ('id', '!=', partner.id)], limit=1)
-                if exist:
-                    raise ValidationError('The mobile number already exist in the system')
+    # @api.constrains('phone', 'mobile')
+    # def check_duplicate_phone_mobile(self):
+    #     for partner in self:
+    #         if partner.phone:
+    #             if partner.phone.index('+84') > -1:
+    #                 raise ValidationError('Please change phone number from +84 to 0...')
+    #             exist = self.search([('phone', 'in', [partner.phone, partner.phone.strip()]), ('id', '!=', partner.id)], limit=1)
+    #             if exist:
+    #                 raise ValidationError('The phone number already exist in the system')
+    #         if partner.mobile:
+    #             if partner.mobile.index('+84') > -1:
+    #                 raise ValidationError('Please change mobile number from +84 to 0...')
+    #             exist = self.search([('phone', 'in', [partner.mobile, partner.mobile.strip()]), ('id', '!=', partner.id)], limit=1)
+    #             if exist:
+    #                 raise ValidationError('The mobile number already exist in the system')
 
     @api.constrains('email')
     def check_duplicate_email(self):
