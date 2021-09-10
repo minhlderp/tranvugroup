@@ -4,7 +4,7 @@
     'summary': 'Summery',
     'description': '',
     'category': 'Sale',
-    'depends': ['pos_sale'],
+    'depends': ['pos_sale', 'phone_validation'],
     'data': [
         'data/data.xml',
         'views/sale_order_view.xml',

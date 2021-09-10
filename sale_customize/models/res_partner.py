@@ -33,6 +33,14 @@ class ResPartner(models.Model):
     is_duplicate_phone = fields.Boolean(default=False, compute='_get_is_duplicate_phone', search='_search_is_duplicate_phone')
     is_duplicate_email = fields.Boolean(default=False, compute='_get_is_duplicate_email', search='_search_is_duplicate_email')
 
+    @api.onchange('phone', 'country_id', 'company_id')
+    def _onchange_phone_validation(self):
+        return
+
+    @api.onchange('mobile', 'country_id', 'company_id')
+    def _onchange_mobile_validation(self):
+        return
+
     @api.model
     def _search_is_duplicate_phone(self, operator, value):
         partners = self.search([])
@@ -81,16 +89,17 @@ class ResPartner(models.Model):
 
     @api.model
     def convert_phone(self):
+        self.env.cr.execute("""
+            update res_partner set phone = NULLIF(regexp_replace(phone, '\D','','g'), '')
+        """)
+
         res_partners = self.env['res.partner'].search([
-            '|', ('phone', 'like', '+84'),
-            ('mobile', 'like', '+84')
+            ('phone', 'like', '84%')
         ])
         for partner in res_partners:
             vals = {}
             if partner.phone:
-                vals['phone'] = partner.phone.replace('+84', '0')
-            if partner.mobile:
-                vals['mobile'] = partner.mobile.replace('+84', '0')
+                vals['phone'] = '0' + partner.phone[2:]
             partner.with_context(from_dw=True).write(vals)
 
     # @api.constrains('phone', 'mobile')
