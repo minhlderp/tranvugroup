@@ -43,7 +43,7 @@ class ResPartner(models.Model):
 
     @api.model
     def _search_is_duplicate_phone(self, operator, value):
-        partners = self.search([])
+        partners = self.search([('phone', '!=', ''), ('phone', '!=', False)])
         potential_dupplicates = []
         for partner in partners:
             if partner.is_duplicate_phone:
@@ -52,7 +52,7 @@ class ResPartner(models.Model):
 
     @api.model
     def _search_is_duplicate_email(self, operator, value):
-        partners = self.search([])
+        partners = self.search([('email', '!=', ''), ('email', '!=', False)])
         potential_dupplicates = []
         for partner in partners:
             if partner.is_duplicate_email:
